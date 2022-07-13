@@ -134,3 +134,6 @@ lib64/
 lib64
 bin/
 venv/
+
+# Env vars
+*.yaml
