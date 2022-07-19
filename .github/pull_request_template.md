@@ -1,20 +1,23 @@
-## Related Tickets
-- Ticket #
+## Title
+### :star: Related Tickets
+- Ticket Number
 
-## Changes Summary
+### :herb: Related Branch
+- Branch Name
+
+## 🚀 Changes Summary
 - Change 1
 - Change 2
 
-## Additional Info
+## :page_facing_up: Additional Info
 - Any additional info or context
 
-## Checklist
+## :heavy_check_mark: Checklist
 - [x] Code changes
 - [x] Unit Tests
 - [x] Documentation
 
-## Screenshots
-(Don´t skip this section!)
+## :computer: Screenshots
 Original | Updated
 :----:|:----:
 **Original Screenshot** | **New Screenshot**
