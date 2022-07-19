@@ -1,6 +1,6 @@
 ## Title
 ### :star: Related Tickets
-- Ticket Number
+- [Ticket Number](https://nahuel-quiroga-nan-labs.atlassian.net/jira/software/projects/ONB/boards/4?selectedIssue=)
 
 ### :herb: Related Branch
 - Branch Name
