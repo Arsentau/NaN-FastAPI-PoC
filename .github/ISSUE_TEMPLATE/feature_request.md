@@ -1,11 +1,8 @@
-# Title
-## Summary
-
 ---
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: documentation, enhancement, good first issue
+labels: documentation, duplicate, enhancement
 assignees: ''
 
 ---
