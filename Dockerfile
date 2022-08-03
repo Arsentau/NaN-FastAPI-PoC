@@ -1,11 +1,9 @@
-FROM python:3.10.5
-
-RUN python3 -m pip install --upgrade pip
-
-COPY requirements.txt .
-
-RUN python3 -m  pip install -r requirements.txt
+FROM python:3.10.5-slim
 
 WORKDIR /app
 
-COPY ./ /
+# Install dependencies
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
