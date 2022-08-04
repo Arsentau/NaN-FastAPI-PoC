@@ -1,19 +1,35 @@
-from fastapi import FastAPI
+
 import uvicorn
-import hydra
-from core.config import Config
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-@hydra.main(version_base= "1.2.0" ,config_path="core", config_name="config")
-def main(cfg: Config) -> FastAPI:
-    instance = FastAPI(title="Title", debug=True)
-    return instance
+from core.config import ApiSettings, Settings
+from routes.routers import api_router
 
-app = main()
+API_SETTINGS: ApiSettings = Settings.get_api_settings()
+
+app = FastAPI(
+    title=API_SETTINGS.title,
+    debug=API_SETTINGS.debug,
+    version=API_SETTINGS.version
+)
+# Add routes
+app.include_router(api_router)
+
+# Add Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=API_SETTINGS.allow_origins,
+    allow_credentials=API_SETTINGS.allow_credentials,
+    allow_methods=API_SETTINGS.allow_methods,
+    allow_headers=API_SETTINGS.allow_headers,
+)
+
 
 if __name__ == "__main__":
     uvicorn.run(
         'main:app',
-        host="127.0.0.1",
-        port=8000,
-        debug=True
-        )
+        host=API_SETTINGS.host,
+        port=API_SETTINGS.port,
+        debug=API_SETTINGS.debug
+    )
