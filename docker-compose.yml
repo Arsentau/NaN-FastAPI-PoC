@@ -1,25 +1,32 @@
-version: 3.8
-
+version: '3.8'
 services:
-  app:
+  web:
     build: .
-    container_name: nan-fastapi-poc
-    command: uvicorn main:app --host 127.0.0.1 --port 5000 ---reload
-    ports:
-      - 5000:5000
+    command: uvicorn src.main:app --host 0.0.0.0 --reload
     volumes:
-      - .:app
-  postgres:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - .:/app
+    ports:
+      - 8000:8000
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    env_file:
+      - .env.database
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    depends_on:
+     - db
+    ports:
+      - "5050:80"
+    env_file:
+      - .env.database
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 volumes:
-  db:
-    driver: local
+  postgres_data:
+  pgadmin-data:
