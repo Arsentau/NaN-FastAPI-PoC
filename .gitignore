@@ -139,3 +139,5 @@ venv/
 *.yaml
 .env
 .env.database
+
+.vscode/
