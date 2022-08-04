@@ -137,3 +137,5 @@ venv/
 
 # Env vars
 *.yaml
+.env
+.env.database
