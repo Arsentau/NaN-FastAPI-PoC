@@ -2,41 +2,33 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.config import (
-    ALLOWED_CORS_HEADERS,
-    ALLOWED_CORS_HOSTS,
-    ALLOWED_CORS_METHODS,
-    APP_NAME,
-    APP_VERSION,
-    IS_DEBUG,
-)
+from core.config import ApiSettings, Settings
 from routes.routers import api_router
 
+API_SETTINGS: ApiSettings = Settings.get_api_settings()
 
-def start_app() -> FastAPI:
-    fast_app = FastAPI(title=APP_NAME, version=APP_VERSION, debug=IS_DEBUG)
-    # Routes
-    fast_app.include_router(api_router)
+app = FastAPI(
+    title=API_SETTINGS.title,
+    debug=API_SETTINGS.debug,
+    version=API_SETTINGS.version
+)
+# Add routes
+app.include_router(api_router)
 
-    # Middleware
-    fast_app.add_middleware(
-        CORSMiddleware,
-        allow_origins=ALLOWED_CORS_HOSTS,
-        allow_credentials=True,
-        allow_methods=ALLOWED_CORS_METHODS,
-        allow_headers=ALLOWED_CORS_HEADERS,
-    )
-    return fast_app
-
-
-app = start_app()
+# Add Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=API_SETTINGS.allow_origins,
+    allow_credentials=API_SETTINGS.allow_credentials,
+    allow_methods=API_SETTINGS.allow_methods,
+    allow_headers=API_SETTINGS.allow_headers,
+)
 
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        debug=True
+        'main:app',
+        host=API_SETTINGS.host,
+        port=API_SETTINGS.port,
+        debug=API_SETTINGS.debug
     )

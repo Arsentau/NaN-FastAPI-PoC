@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    volumes:
+      - ./src:/app
+    ports:
+      - 8000:8000
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env.database
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    depends_on:
+     - db
+    ports:
+      - "5050:80"
+    env_file:
+      - .env.database
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+volumes:
+  postgres_data:
+  pgadmin-data:
