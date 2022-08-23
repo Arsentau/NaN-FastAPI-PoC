@@ -10,6 +10,14 @@ To create a Native Python virtual environment simply run the following command o
 
 `python -m venv .venv --prompt fastapi`
 
+## Install dependencies
+Be sure you have the virtual environment active.
+If not in the root folder of the project execute:
+`source .venv/bin/activate`
+
+Once the virtual environment is activated run:
+`pip install -r requirements.txt`
+
 ## Add .env file
 In the root directory of the project create a `.env` file with the following fields:
 ```
@@ -37,9 +45,9 @@ POSTGRES_NAME=fastapi
 PGADMIN_DEFAULT_EMAIL=fastapi@localhost.com
 PGADMIN_DEFAULT_PASSWORD=fastapi
 ```
-**This values can be directly used.**
+**These values can be directly used.**
 
-## How to run locally
+# How to run locally
 - Open your terminal on the root project directory
 - Run the command `docker compose up --build`
 - To see docs ands schemas you can access
@@ -51,3 +59,44 @@ PGADMIN_DEFAULT_PASSWORD=fastapi
     ```bash
     http://0.0.0.0:8000/redoc
     ```
+
+---
+
+# How to create development environment
+
+## First
+- Complete the following steps described at the beginning of this file:
+   - Create venv
+   - Install dependencies
+   - Add .env file
+   - Add .env.database file
+
+## Install pre-commit
+To install pre-commit in the .git hooks folder you only need to run the following command in the root folder of the project:
+
+```bash
+pre-commit install
+```
+
+## Apply last committed migration
+- To run the last migration run the following command:
+
+```bash
+alembic upgrade head
+```
+## Create migration
+
+```bash
+alembic revision --autogenerate -m "<message>"
+```
+
+## Apply migration
+- In order to apply the last committed revision execute the following command:
+```bash
+alembic upgrade head
+```
+
+- To apply one specific revision execute this command
+```bash
+alembic upgrade <revision_code>
+```
