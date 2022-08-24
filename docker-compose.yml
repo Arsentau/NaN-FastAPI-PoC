@@ -3,11 +3,14 @@ services:
   web:
     build: .
     volumes:
-      - ./src:/app
+      - ./:/app
     ports:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+      - .env
+      - .env.database
   db:
     image: postgres:13-alpine
     volumes:

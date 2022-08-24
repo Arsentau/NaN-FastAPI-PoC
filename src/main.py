@@ -12,6 +12,13 @@ app = FastAPI(
     debug=API_SETTINGS.debug,
     version=API_SETTINGS.version
 )
+
+# This is for testing proposes only
+# @app.on_event("startup")
+# async def startup_event():
+#     factory = DbFactory()
+#     factory.constructor(db: Session = Depends(get_db))
+
 # Add routes
 app.include_router(api_router)
 
