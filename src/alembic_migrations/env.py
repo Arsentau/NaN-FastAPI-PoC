@@ -3,8 +3,8 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
+from core.config import DbSettings, Settings
 from models.models import Base
-from src.core.config import DbSettings, Settings
 
 DB_CREDENTIALS: DbSettings = Settings.get_db_settings()
 
