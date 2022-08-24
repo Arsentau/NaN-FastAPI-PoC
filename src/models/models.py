@@ -8,19 +8,19 @@ from db.database import Base
 class Company(Base):
     __tablename__ = 'company'
     id = Column(String, primary_key=True, index=True)
-    company_name = Column(String)
-    address = Column(String)
+    company_name = Column(String, nullable=False)
+    address = Column(String, nullable=False)
     address_line_2 = Column(String)
-    city = Column(String)
-    state_province = Column(String)
-    country = Column(String)
-    zip_code = Column(String)
+    city = Column(String, nullable=False)
+    state_province = Column(String, nullable=False)
+    country = Column(String, nullable=False)
+    zip_code = Column(String, nullable=False)
     time_zone = Column(String)
     owner_name = Column(String)
     owner_last_name = Column(String)
-    email = Column(String, unique=True)
+    email = Column(String, unique=True, nullable=False)
     phone_number = Column(String)
-    tax_id = Column(String)
+    tax_id = Column(String, nullable=False)
 
 
 class Employee(Base):
