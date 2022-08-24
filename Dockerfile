@@ -8,9 +8,10 @@ RUN apt-get install --no-install-recommends -y \
     openssh-client \
     git
 
+COPY ./requirements.txt /app/
+
 WORKDIR /app
-COPY ./entrypoint.sh /
-ENTRYPOINT ["sh", "/entrypoint.sh"]
-COPY requirements.txt .
-RUN pip install -r requirements.txt
 COPY . .
+
+RUN pip install -r requirements.txt
+ENTRYPOINT ["./scripts/migrations.sh"]

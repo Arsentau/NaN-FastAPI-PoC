@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from src.core.config import DbSettings, Settings
+from core.config import DbSettings, Settings
 
 # Get DB credentials from .env.database file
 DB_CREDENTIALS: DbSettings = Settings.get_db_settings()

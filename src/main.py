@@ -30,5 +30,6 @@ if __name__ == "__main__":
         'main:app',
         host=API_SETTINGS.host,
         port=API_SETTINGS.port,
-        debug=API_SETTINGS.debug
+        debug=API_SETTINGS.debug,
+        reload=True
     )

@@ -7,7 +7,7 @@ from pydantic import BaseSettings
 class ApiSettings(BaseSettings):
     version: Optional[str] = "Default Mode"
     debug: Optional[bool] = True
-    host: Optional[str] = "127.0.0.1"
+    host: Optional[str] = "0.0.0.0"
     port: Optional[int] = 8000
     allow_origins: Optional[List[str]] = ["*"]
     allow_credentials: Optional[List[str]] = ["*"]
@@ -20,13 +20,13 @@ class ApiSettings(BaseSettings):
 
 
 class DbSettings(BaseSettings):
-    postgres_host: str
-    postgres_port: int
-    postgres_user: str
-    postgres_password: str
-    postgres_name: str
-    pgadmin_default_email: str
-    pgadmin_default_password: str
+    postgres_host: str = "db"
+    postgres_port: int = "5432"
+    postgres_user: str = "fastapi"
+    postgres_password: str = "fastapi"
+    postgres_name: str = "fastapi"
+    pgadmin_default_email: str = "fastapi@db.com"
+    pgadmin_default_password: str = "fastapi"
 
     class Config:
         env_file = ".env.database"
