@@ -35,7 +35,7 @@ If this file is not added the project will use default variables to allow you ru
 
 ## Add .env.database
 This file is required to run the dockerized Database.
-In the root directory of the project create a `.env` file with the following fields:
+In the root directory of the project create a `.env.database` file with the following fields:
 ```
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
@@ -49,7 +49,7 @@ PGADMIN_DEFAULT_PASSWORD=fastapi
 
 # How to run locally
 - Open your terminal on the root project directory
-- Run the command `docker compose up --build`
+- Run the command `docker-compose up --build`
 - To see docs ands schemas you can access
     - OpenApi documentation
     ```bash
