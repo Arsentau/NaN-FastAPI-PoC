@@ -26,5 +26,6 @@ class Employee(Base):
     email = Column(String, unique=True)
     phone_number = Column(String)
     is_manager = Column(Boolean)
+    avatar_url = Column(String)
     company = Column(String, ForeignKey('company.id'))
     role = Column(String)
