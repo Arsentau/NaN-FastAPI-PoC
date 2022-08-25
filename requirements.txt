@@ -23,6 +23,7 @@ pre-commit==2.20.0
 psycopg2-binary==2.9.3
 pycodestyle==2.8.0
 pydantic==1.9.1
+pydantic[email]
 pyflakes==2.4.0
 pyparsing==3.0.9
 python-dotenv==0.20.0
