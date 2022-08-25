@@ -1,21 +1,39 @@
-from fastapi import APIRouter, status
+from typing import List
+
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
+from db.database import get_db
+from models.schemas.employee import EmployeeSchema
+from services.employee_service import EmployeeService
 
 router = APIRouter()
+employee_service = EmployeeService()
 
 
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
     name="Get all employees",
+    response_model=List[EmployeeSchema]
 )
-async def get_all_employees():
-    return "All employees:"
+async def get_all_employees(db: Session = Depends(get_db)):
+    return employee_service.get_all(db)
 
 
 @router.get(
-    "/{company_id}/",
+    "/{_id}/",
     status_code=status.HTTP_200_OK,
     name="Get employee by Id",
 )
-async def get_employee(company_id: int):
-    return "Ok"
+async def get_employee(_id: int, db: Session = Depends(get_db)):
+    return employee_service.get_by_id(db, _id)
+
+
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    name="Create a employee",
+)
+async def create_employee(employee: EmployeeSchema, db: Session = Depends(get_db)):
+    return employee_service.create(db, employee)

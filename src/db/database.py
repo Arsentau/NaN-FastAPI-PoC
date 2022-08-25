@@ -15,12 +15,11 @@ SQLALCHEMY_DATABASE_URL = "postgresql://%s:%s@%s:%s/%s" % (
     DB_CREDENTIALS.postgres_name
 )
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+# Base.metadata.create_all(bind=engine)
 
 
 def get_db():
