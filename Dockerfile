@@ -10,12 +10,9 @@ RUN apt-get install --no-install-recommends -y \
     git
 RUN python3 -m pip install --upgrade pip
 
-WORKDIR /app/src
+WORKDIR /app
 
 COPY ./requirements.txt /app
-RUN python3 -m pip install -r ../requirements.txt
-COPY ./entrypoint.sh /app/src
-COPY ./src /app/src
-COPY .env /app/src/
-COPY .env.database /app/src/
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+RUN python3 -m pip install -r requirements.txt
+COPY ./src /app
+ENTRYPOINT ["sh", "/app/scripts/migrations.sh"]
