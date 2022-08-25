@@ -15,4 +15,4 @@ WORKDIR /app
 COPY ./requirements.txt /app
 RUN python3 -m pip install -r requirements.txt
 COPY ./src /app
-ENTRYPOINT ["sh", "/app/scripts/migrations.sh"]
+ENTRYPOINT ["sh", "/app/scripts/startup.sh"]
