@@ -1,3 +1,4 @@
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,12 +13,6 @@ app = FastAPI(
     debug=API_SETTINGS.debug,
     version=API_SETTINGS.version
 )
-
-
-# @app.on_event("startup")
-# async def startup_event(db: Session = Depends(get_db)):
-#     factory = DbFactory()
-#     factory.constructor(db)
 
 # Add routes
 app.include_router(api_router)
