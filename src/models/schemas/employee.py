@@ -17,3 +17,6 @@ class EmployeeSchema(BaseModel):
     company: int
     role: str
     avatar_url: HttpUrl = "http://google.com"
+
+    class Config:
+        orm_mode = True
