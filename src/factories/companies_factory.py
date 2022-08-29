@@ -12,7 +12,7 @@ class CompanyFactory:
     def __init__(self, db: Session) -> Company:
         """Set the DB session and the quantity of companies that should be created"""
         self.db = db
-        self._companies_bulk_reactor()
+        self._companies_bulk_creator()
 
     def _company_creator(self) -> None:
         """Creates a single fake company"""
@@ -34,7 +34,7 @@ class CompanyFactory:
         )
         self.company = new_company
 
-    def _companies_bulk_reactor(self) -> None:
+    def _companies_bulk_creator(self) -> None:
         """Bulk companies creator method"""
         self._company_creator()
-        CompanyRepository.bulk_create(self.db, self.company)
+        CompanyRepository.create(self.company, self.db)
