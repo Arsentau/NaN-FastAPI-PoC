@@ -1,4 +1,5 @@
 FROM python:3.10.5-slim
+
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y \
     python3-dev \
@@ -7,11 +8,11 @@ RUN apt-get install --no-install-recommends -y \
     gcc \
     openssh-client \
     git
-
-COPY ./requirements.txt /app/
+RUN python3 -m pip install --upgrade pip
 
 WORKDIR /app
-COPY . .
 
-RUN pip install -r requirements.txt
-ENTRYPOINT ["./scripts/migrations.sh"]
+COPY ./requirements.txt /app
+RUN python3 -m pip install -r requirements.txt
+COPY ./src /app
+ENTRYPOINT ["sh", "/app/scripts/startup.sh"]

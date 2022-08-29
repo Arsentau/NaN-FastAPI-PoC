@@ -1,3 +1,4 @@
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,6 +13,7 @@ app = FastAPI(
     debug=API_SETTINGS.debug,
     version=API_SETTINGS.version
 )
+
 # Add routes
 app.include_router(api_router)
 
@@ -31,5 +33,6 @@ if __name__ == "__main__":
         host=API_SETTINGS.host,
         port=API_SETTINGS.port,
         debug=API_SETTINGS.debug,
-        reload=True
+        reload=True,
+        reload_includes=["*"]
     )

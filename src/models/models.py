@@ -7,7 +7,7 @@ from db.database import Base
 
 class Company(Base):
     __tablename__ = 'company'
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True, unique=True)
     company_name = Column(String, nullable=False)
     address = Column(String, nullable=False)
     address_line_2 = Column(String)
