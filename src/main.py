@@ -1,10 +1,14 @@
 
+import logging
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from core.config import ApiSettings, Settings
 from routes.routers import api_router
+
+logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
 
 API_SETTINGS: ApiSettings = Settings.get_api_settings()
 
