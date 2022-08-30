@@ -3,7 +3,6 @@ from uuid import uuid4
 
 from sqlalchemy.orm import Session
 
-from exceptions.database_exceptions import DatabaseExceptions
 from factories.companies_factory import CompanyFactory
 from models.models import Company
 from models.schemas.company import NewCompanySchema, PatchCompanySchema
@@ -27,10 +26,7 @@ class CompanyService:
 
     @classmethod
     async def get_all(self, db: Session) -> List[Company]:
-        companies = await CompanyRepository.get_all(db)
-        if not companies:
-            DatabaseExceptions.throw_not_found_error("Companies")
-        return companies
+        return await CompanyRepository.get_all(db)
 
     @classmethod
     async def get_by_id(self, id: str, db: Session) -> Company:
