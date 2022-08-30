@@ -1,9 +1,9 @@
 from typing import List
 from uuid import uuid4
 
-from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from exceptions.database_exceptions import DatabaseExceptions
 from factories.companies_factory import CompanyFactory
 from models.models import Company
 from models.schemas.company import NewCompanySchema, PatchCompanySchema
@@ -29,7 +29,7 @@ class CompanyService:
     async def get_all(self, db: Session) -> List[Company]:
         companies = await CompanyRepository.get_all(db)
         if not companies:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Companies not found")
+            DatabaseExceptions.throw_not_found_error("Companies")
         return companies
 
     @classmethod
