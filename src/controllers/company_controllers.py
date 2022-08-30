@@ -1,36 +1,69 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from db.database import get_db
-from models.schemas.company import CompanySchema
+from models.schemas.company import CompanySchema, NewCompanySchema, PatchCompanySchema
 from services.company_service import CompanyService
 
 router = APIRouter()
 
 
 @router.get(
-    "/mock-company",
+    "/mock-company/{n}",
     status_code=status.HTTP_201_CREATED,
-    name="Create and get mock company",
-    response_model=CompanySchema
+    name="Create and get n mock company",
+    response_model=List[CompanySchema]
 )
-async def mock_company_creator(db: Session = Depends(get_db)):
-    return CompanyService.bulk_reactor(db)
+async def mock_company_creator(n: int, db: Session = Depends(get_db)):
+    return await CompanyService.bulk_creator(db, n)
 
 
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
-    name="Get all companies"
+    name="Get all companies",
+    response_model=List[CompanySchema]
 )
 async def get_all_companies(db: Session = Depends(get_db)):
-    return CompanyService.get_all(db)
+    return await CompanyService.get_all(db)
 
 
 @router.get(
-    "/{company_id}/",
+    "/{id}",
     status_code=status.HTTP_200_OK,
     name="Get Company by Id",
+    response_model=CompanySchema
 )
-async def get_company(company_id: str):
-    return "Ok"
+async def get_company(id: str, db: Session = Depends(get_db)):
+    return await CompanyService.get_by_id(id, db)
+
+
+@router.patch(
+    "/{id}",
+    status_code=status.HTTP_200_OK,
+    name="Modify company by Id",
+    response_model=CompanySchema
+)
+async def update_company(id: str, request: PatchCompanySchema, db: Session = Depends(get_db)):
+    return await CompanyService.edit_company(id, request, db)
+
+
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    name="Create new company",
+    response_model=CompanySchema
+)
+async def new_company(request: NewCompanySchema, db: Session = Depends(get_db)):
+    return await CompanyService.new_company(request, db)
+
+
+@router.delete(
+    "/{id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    name="Delete company by id"
+)
+async def delete_company(id: str, db: Session = Depends(get_db)):
+    return await CompanyService.delete_company(id, db)
