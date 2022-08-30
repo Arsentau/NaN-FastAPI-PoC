@@ -61,7 +61,7 @@ async def new_company(request: NewCompanySchema, db: Session = Depends(get_db)):
 
 
 @router.delete(
-    "/company/{id}",
+    "/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
     name="Delete company by id"
 )

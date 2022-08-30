@@ -20,7 +20,7 @@ class CompanyRepository:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
         if not companies:
-            logger.error("\nThe are not companies yet")
+            logger.error("There are not companies in the database yet")
             DatabaseExceptions.throw_not_found_error("Companies")
         return companies
 
@@ -34,7 +34,7 @@ class CompanyRepository:
             DatabaseExceptions.throw_internal_server_error()
 
         if not company:
-            logger.error(f"\nThe company_id: {id} does not exist")
+            logger.error(f"The company_id: {id} does not exist")
             DatabaseExceptions.throw_not_found_error("Company")
         return company
 
