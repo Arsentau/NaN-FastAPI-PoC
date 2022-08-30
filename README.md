@@ -24,12 +24,12 @@ In the root directory of the project create a `.env` file with the following fie
 TITLE=Title
 VERSION=0.0.1
 DEBUG=True
-HOST=localhost
+HOST=0.0.0.0
 PORT=8000
-ALLOW_ORIGINS=[*]
-ALLOW_CREDENTIALS=[*]
-ALLOW_METHODS=[*]
-ALLOW_HEADERS=[*]
+ALLOW_ORIGINS='["*"]'
+ALLOW_CREDENTIALS='["*"]'
+ALLOW_METHODS='["*"]'
+ALLOW_HEADERS='["*"]'
 ```
 If this file is not added the project will use default variables to allow you run the application by default.
 
@@ -37,7 +37,7 @@ If this file is not added the project will use default variables to allow you ru
 This file is required to run the dockerized Database.
 In the root directory of the project create a `.env.database` file with the following fields:
 ```
-POSTGRES_HOST=localhost
+POSTGRES_HOST=nan-fastapi-poc-db-1
 POSTGRES_PORT=5432
 POSTGRES_USER=fastapi
 POSTGRES_PASSWORD=fastapi
@@ -45,6 +45,7 @@ POSTGRES_NAME=fastapi
 PGADMIN_DEFAULT_EMAIL=fastapi@localhost.com
 PGADMIN_DEFAULT_PASSWORD=fastapi
 ```
+**IMPORTANT** The value of `POSTGRES_HOST` should be the name of the db container.
 **These values can be directly used.**
 
 # How to run locally
