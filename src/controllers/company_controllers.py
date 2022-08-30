@@ -24,7 +24,7 @@ async def mock_company_creator(n: int, db: Session = Depends(get_db)):
     "/",
     status_code=status.HTTP_200_OK,
     name="Get all companies",
-    response_model=List[CompanySchema | None]
+    response_model=List[CompanySchema]
 )
 async def get_all_companies(db: Session = Depends(get_db)):
     return await CompanyService.get_all(db)

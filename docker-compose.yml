@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   web:
+    container_name: web-fastapi
     build: .
     volumes:
       - ./src:/app
@@ -22,6 +23,7 @@ services:
     env_file:
       - .env.database
   pgadmin:
+    container_name: pgadmin-fastapi
     image: dpage/pgadmin4
     restart: always
     depends_on:
