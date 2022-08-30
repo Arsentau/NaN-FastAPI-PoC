@@ -17,7 +17,7 @@ router = APIRouter()
     response_model=List[CompanySchema]
 )
 async def mock_company_creator(n: int, db: Session = Depends(get_db)):
-    return CompanyService.bulk_creator(db, n)
+    return await CompanyService.bulk_creator(db, n)
 
 
 @router.get(
@@ -27,27 +27,7 @@ async def mock_company_creator(n: int, db: Session = Depends(get_db)):
     response_model=List[CompanySchema]
 )
 async def get_all_companies(db: Session = Depends(get_db)):
-    return CompanyService.get_all(db)
-
-
-@router.post(
-    "/",
-    status_code=status.HTTP_201_CREATED,
-    name="Create new company",
-    response_model=CompanySchema
-)
-async def new_company(request: NewCompanySchema, db: Session = Depends(get_db)):
-    return CompanyService.new_company(request, db)
-
-
-@router.patch(
-    "/{id}",
-    status_code=status.HTTP_200_OK,
-    name="Modify company by Id",
-    response_model=CompanySchema
-)
-async def update_company(id: str, request: PatchCompanySchema, db: Session = Depends(get_db)):
-    return CompanyService.edit_company(id, request, db)
+    return await CompanyService.get_all(db)
 
 
 @router.get(
@@ -57,7 +37,27 @@ async def update_company(id: str, request: PatchCompanySchema, db: Session = Dep
     response_model=CompanySchema
 )
 async def get_company(id: str, db: Session = Depends(get_db)):
-    return CompanyService.get_by_id(id, db)
+    return await CompanyService.get_by_id(id, db)
+
+
+@router.patch(
+    "/{id}",
+    status_code=status.HTTP_200_OK,
+    name="Modify company by Id",
+    response_model=CompanySchema
+)
+async def update_company(id: str, request: PatchCompanySchema, db: Session = Depends(get_db)):
+    return await CompanyService.edit_company(id, request, db)
+
+
+@router.post(
+    "/",
+    status_code=status.HTTP_201_CREATED,
+    name="Create new company",
+    response_model=CompanySchema
+)
+async def new_company(request: NewCompanySchema, db: Session = Depends(get_db)):
+    return await CompanyService.new_company(request, db)
 
 
 @router.delete(
@@ -66,4 +66,4 @@ async def get_company(id: str, db: Session = Depends(get_db)):
     name="Delete company by id"
 )
 async def delete_company(id: str, db: Session = Depends(get_db)):
-    return CompanyService.delete_company(id, db)
+    return await CompanyService.delete_company(id, db)
