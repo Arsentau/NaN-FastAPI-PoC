@@ -15,14 +15,10 @@ class CompanyRepository:
     async def get_all(self, db: Session) -> List[Company]:
         """Gets all company's records from the DB"""
         try:
-            companies = db.query(Company).all()
+            return db.query(Company).all()
         except Exception as e:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
-        if not companies:
-            logger.error("There are not companies in the database yet")
-            DatabaseExceptions.throw_not_found_error("Companies")
-        return companies
 
     @classmethod
     async def get_by_id(self, id: str, db: Session) -> Company:
