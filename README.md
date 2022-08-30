@@ -37,7 +37,7 @@ If this file is not added the project will use default variables to allow you ru
 This file is required to run the dockerized Database.
 In the root directory of the project create a `.env.database` file with the following fields:
 ```
-POSTGRES_HOST=nan-fastapi-poc-db-1
+POSTGRES_HOST=db-fastapi
 POSTGRES_PORT=5432
 POSTGRES_USER=fastapi
 POSTGRES_PASSWORD=fastapi
