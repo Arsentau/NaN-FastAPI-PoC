@@ -9,7 +9,7 @@ from repositories.company_repository import CompanyRepository
 
 class CompanyFactory:
     """Generates Companies in the DB"""
-    def __init__(self, db: Session) -> Company:
+    def __init__(self, db: Session) -> None:
         """Set the DB session and the quantity of companies that should be created"""
         self.db = db
         self._companies_bulk_creator()
