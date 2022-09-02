@@ -35,5 +35,5 @@ async def get_employee(id: str, db: Session = Depends(get_db)):
     status_code=status.HTTP_201_CREATED,
     name="Create a employee",
 )
-async def create_employee(employee: EmployeeSchema, db: Session = Depends(get_db)):
-    return employee_service.create(db, employee)
+async def new_employee(employee: EmployeeSchema, db: Session = Depends(get_db)):
+    return employee_service.create(employee, db)
