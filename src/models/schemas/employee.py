@@ -14,7 +14,7 @@ class EmployeeSchema(BaseModel):
     email: EmailStr
     phone_number: str
     is_manager: bool
-    company: int
+    company: str
     role: str
     avatar_url: HttpUrl = "http://google.com"
 

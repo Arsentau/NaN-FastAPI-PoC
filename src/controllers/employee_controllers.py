@@ -22,12 +22,12 @@ async def get_all_employees(db: Session = Depends(get_db)):
 
 
 @router.get(
-    "/{_id}/",
+    "/{id}/",
     status_code=status.HTTP_200_OK,
     name="Get employee by Id",
 )
-async def get_employee(_id: int, db: Session = Depends(get_db)):
-    return employee_service.get_by_id(db, _id)
+async def get_employee(id: str, db: Session = Depends(get_db)):
+    return employee_service.get_by_id(db, id)
 
 
 @router.post(
