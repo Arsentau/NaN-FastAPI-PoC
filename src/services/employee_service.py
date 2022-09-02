@@ -1,21 +1,22 @@
-import logging
+from typing import List
 
+from sqlalchemy.orm import Session
+
+from models.models import Employee
 from repositories.employee_repository import EmployeeRepository
-
-logger = logging.getLogger(__name__)
 
 
 class EmployeeService:
     employee_repository = EmployeeRepository()
 
-    def get_all(self, db):
+    def get_all(self, db: Session) -> List[Employee]:
         employee = self.employee_repository.get_all(db)
         return employee
 
-    def get_by_id(self, db, _id: int):
-        employee = self.employee_repository.get_by_id(db, _id)
+    def get_by_id(self, id: str, db: Session) -> Employee:
+        employee = self.employee_repository.get_by_id(db, id)
         return employee
 
-    def create(self, db, employee):
+    def create(self, employee, db: Session) -> Employee:
         employee = self.employee_repository.create(db, employee)
         return employee
