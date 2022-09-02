@@ -37,7 +37,6 @@ class NewEmployeeSchema(BaseModel):
     personal_id: str
     email: EmailStr
     phone_number: str
-    is_manager: bool
     company: str
     role: str
     avatar_url: HttpUrl = DEFAULT_AVATAR_URL
