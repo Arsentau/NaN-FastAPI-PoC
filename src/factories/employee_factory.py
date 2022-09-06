@@ -40,14 +40,14 @@ class EmployeesFactory:
         await EmployeeRepository.create(new_employee, db)
         self.employees.append(new_employee)
 
-    async def bulk_creator_for_company(self, n: int, db: Session, company_id: str | None = None):
+    async def bulk_creator_for_company(self, quantity: int, db: Session, company_id: str | None = None):
         """Creates n new employees for a given company_id"""
-        for _ in range(n):
+        for _ in range(quantity):
             await self._employee_creator(db, company_id)
         return self.employees
 
-    async def bulk_creator(self, n: int, db: Session, companies: List[Company]):
-        for _ in range(n):
+    async def bulk_creator(self, quantity: int, db: Session, companies: List[Company]):
+        for _ in range(quantity):
             await self._employee_creator(
                 db=db,
                 company_id=random.choice(companies).id

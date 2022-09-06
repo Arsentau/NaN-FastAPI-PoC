@@ -34,8 +34,8 @@ class CompanyFactory:
         await CompanyRepository.create(new_company, db)
         self.companies.append(new_company)
 
-    async def bulk_creator(self, n: int, db: Session) -> List[Company]:
+    async def bulk_creator(self, quantity: int, db: Session) -> List[Company]:
         """Creates n new companies and returns the list of new companies"""
-        for _ in range(n):
+        for _ in range(quantity):
             await self._company_creator(db)
         return self.companies

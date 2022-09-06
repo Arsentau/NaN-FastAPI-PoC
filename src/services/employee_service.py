@@ -14,15 +14,15 @@ from services.company_service import CompanyService
 class EmployeeService:
 
     @staticmethod
-    async def bulk_creator(n: int, db: Session, company_id: str | None) -> List[Employee]:
+    async def bulk_creator(quantity: int, db: Session, company_id: str | None) -> List[Employee]:
         factory = EmployeesFactory()
         if company_id is not None:
             await CompanyService.get_by_id(company_id, db)
-            return await factory.bulk_creator_for_company(n, db, company_id)
+            return await factory.bulk_creator_for_company(quantity, db, company_id)
         companies = await CompanyService.get_all(db)
         if len(companies) == 0:
             DatabaseExceptions.throw_not_found_error("Companies")
-        return await factory.bulk_creator(n, db, companies)
+        return await factory.bulk_creator(quantity, db, companies)
 
     @staticmethod
     async def get_all(db: Session) -> List[Employee]:

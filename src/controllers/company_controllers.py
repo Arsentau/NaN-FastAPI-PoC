@@ -16,8 +16,8 @@ router = APIRouter()
     name="Create and get n mock company",
     response_model=List[CompanySchema]
 )
-async def mock_company_creator(n: int, db: Session = Depends(get_db)):
-    return await CompanyService.bulk_creator(n, db)
+async def mock_company_creator(quantity: int, db: Session = Depends(get_db)):
+    return await CompanyService.bulk_creator(quantity, db)
 
 
 @router.get(

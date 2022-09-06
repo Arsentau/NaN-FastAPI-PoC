@@ -12,10 +12,10 @@ from repositories.company_repository import CompanyRepository
 class CompanyService:
 
     @staticmethod
-    async def bulk_creator(n: int, db: Session) -> List[Company]:
+    async def bulk_creator(quantity: int, db: Session) -> List[Company]:
         """Creates n new mock companies"""
         factory = CompanyFactory()
-        return await factory.bulk_creator(n, db)
+        return await factory.bulk_creator(quantity, db)
 
     @staticmethod
     async def get_all(db: Session) -> List[Company]:

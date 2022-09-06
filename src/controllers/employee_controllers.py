@@ -12,13 +12,13 @@ router = APIRouter()
 
 
 @router.get(
-    "/mock-employee/{n}",
+    "/mock-employee/{quantity}",
     status_code=status.HTTP_200_OK,
     name="Generate mock employees",
     response_model=List[EmployeeSchema]
 )
-async def mock_employee_creator(n: int, db: Session = Depends(get_db), company_id: str = None):
-    return await EmployeeService.bulk_creator(n, db, company_id)
+async def mock_employee_creator(quantity: int, db: Session = Depends(get_db), company_id: str = None):
+    return await EmployeeService.bulk_creator(quantity, db, company_id)
 
 
 @router.get(
