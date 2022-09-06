@@ -17,7 +17,7 @@ router = APIRouter()
     response_model=List[CompanySchema]
 )
 async def mock_company_creator(n: int, db: Session = Depends(get_db)):
-    return await CompanyService.bulk_creator(db, n)
+    return await CompanyService.bulk_creator(n, db)
 
 
 @router.get(
@@ -47,7 +47,7 @@ async def get_company(id: str, db: Session = Depends(get_db)):
     response_model=CompanySchema
 )
 async def update_company(id: str, request: PatchCompanySchema, db: Session = Depends(get_db)):
-    return await CompanyService.edit_company(id, request, db)
+    return await CompanyService.patch(id, request, db)
 
 
 @router.post(
@@ -57,7 +57,7 @@ async def update_company(id: str, request: PatchCompanySchema, db: Session = Dep
     response_model=CompanySchema
 )
 async def new_company(request: NewCompanySchema, db: Session = Depends(get_db)):
-    return await CompanyService.new_company(request, db)
+    return await CompanyService.create(request, db)
 
 
 @router.delete(

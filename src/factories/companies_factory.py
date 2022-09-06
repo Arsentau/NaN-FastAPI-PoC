@@ -1,3 +1,4 @@
+from typing import List
 from uuid import uuid4
 
 from faker import Faker
@@ -9,13 +10,11 @@ from repositories.company_repository import CompanyRepository
 
 class CompanyFactory:
     """Generates Companies in the DB"""
-    def __init__(self, db: Session) -> None:
-        """Set the DB session and the quantity of companies that should be created"""
-        self.db = db
-        self._companies_bulk_creator()
+    def __init__(self) -> None:
+        self.companies = list()
 
-    def _company_creator(self) -> None:
-        """Creates a single fake company"""
+    async def _company_creator(self, db: Session) -> None:
+        """Creates a single fake company in the DB"""
         fake = Faker()
         new_company = Company(
             id=str(uuid4()),
@@ -32,9 +31,11 @@ class CompanyFactory:
             phone_number=fake.phone_number(),
             tax_id=fake.isbn13()
         )
-        self.company = new_company
+        await CompanyRepository.create(new_company, db)
+        self.companies.append(new_company)
 
-    def _companies_bulk_creator(self) -> None:
-        """Bulk companies creator method"""
-        self._company_creator()
-        CompanyRepository.create(self.company, self.db)
+    async def bulk_creator(self, n: int, db: Session) -> List[Company]:
+        """Creates n new companies and returns the list of new companies"""
+        for _ in range(n):
+            await self._company_creator(db)
+        return self.companies
