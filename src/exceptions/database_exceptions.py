@@ -5,12 +5,12 @@ from sqlalchemy.exc import IntegrityError
 class DatabaseExceptions:
 
     @staticmethod
-    def throw_internal_server_error() -> None:
+    def throw_internal_server_error(e: Exception) -> None:
         """Throws a generic DB error"""
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Oops, we couldn't connect to the db, please try again later"
-        )
+        ) from e
 
     @staticmethod
     def throw_not_found_error(item: str) -> None:
@@ -21,14 +21,14 @@ class DatabaseExceptions:
         )
 
     @staticmethod
-    def throw_db_integrity_error(e: IntegrityError):
+    def throw_db_integrity_error(integrity_error: IntegrityError):
         """Throws SqlAlchemy integrity error detail"""
         detail = ""
-        if e.orig.diag.message_detail:
-            detail = e.orig.diag.message_detail
+        if integrity_error.orig.diag.message_detail:
+            detail = integrity_error.orig.diag.message_detail
         else:
-            detail = str(e)
+            detail = str(integrity_error)
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=detail
-        )
+        ) from integrity_error

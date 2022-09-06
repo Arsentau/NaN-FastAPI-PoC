@@ -19,7 +19,7 @@ class EmployeeRepository:
             return db.query(Employee).all()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
     @staticmethod
     async def get_all_for_company(company_id: str, db: Session):
@@ -28,7 +28,7 @@ class EmployeeRepository:
             return db.query(Employee).filter(Employee.company == company_id).all()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
     @staticmethod
     async def get_by_id(id: str, db: Session) -> Employee:
@@ -36,7 +36,7 @@ class EmployeeRepository:
             employee = db.query(Employee).filter(Employee.id == id).first()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
         if not employee:
             logger.error(f"The employee_id: {id} does not exist")
             DatabaseExceptions.throw_not_found_error("Employee")
@@ -48,9 +48,9 @@ class EmployeeRepository:
             db.add(employee)
             db.commit()
             db.refresh(employee)
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
@@ -72,9 +72,9 @@ class EmployeeRepository:
         try:
             db.add(employee)
             db.commit()
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()

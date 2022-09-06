@@ -18,7 +18,7 @@ class CompanyRepository:
             return db.query(Company).all()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
     @staticmethod
     async def get_by_id(id: str, db: Session) -> Company:
@@ -27,7 +27,7 @@ class CompanyRepository:
             company = db.query(Company).filter(Company.id == id).first()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
         if not company:
             logger.error(f"The company_id: {id} does not exist")
@@ -41,9 +41,9 @@ class CompanyRepository:
             db.add(company)
             db.commit()
             db.refresh(company)
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
@@ -65,9 +65,9 @@ class CompanyRepository:
         try:
             db.add(company)
             db.commit()
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
