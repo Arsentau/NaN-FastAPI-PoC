@@ -28,9 +28,9 @@ class CompanyService:
     @staticmethod
     async def patch(id: str, request: PatchCompanySchema, db: Session) -> Company:
         company: Company = await CompanyRepository.get_by_id(id, db)
-        for (k, v) in request.dict().items():
-            if v:
-                setattr(company, k, v)
+        for (key, value) in request.dict().items():
+            if value is not None:
+                setattr(company, key, value)
         await CompanyRepository.patch(company, db)
         return company
 

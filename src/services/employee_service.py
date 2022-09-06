@@ -49,9 +49,9 @@ class EmployeeService:
     @staticmethod
     async def patch(id: str, request: PatchEmployeeSchema, db: Session) -> Employee:
         employee: Employee = await EmployeeRepository.get_by_id(id, db)
-        for (k, v) in request.dict().items():
-            if v:
-                setattr(employee, k, v)
+        for (key, value) in request.dict().items():
+            if value is not None:
+                setattr(employee, key, value)
         await EmployeeRepository.patch(employee, db)
         return employee
 
