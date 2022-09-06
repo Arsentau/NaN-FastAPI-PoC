@@ -1,7 +1,5 @@
 from pydantic import BaseModel, EmailStr, HttpUrl
 
-DEFAULT_AVATAR_URL = "http://google.com"
-
 
 class EmployeeSchema(BaseModel):
     id: str
@@ -25,6 +23,22 @@ class EmployeeSchema(BaseModel):
         orm_mode = True
 
 
+class ShortEmployeeSchema(BaseModel):
+    id: str
+    company: str
+    first_name: str
+    last_name: str
+    country: str
+    email: EmailStr
+    phone_number: str
+    is_manager: bool
+    role: str
+    avatar_url: HttpUrl
+
+    class Config:
+        orm_mode = True
+
+
 class NewEmployeeSchema(BaseModel):
     first_name: str
     last_name: str
@@ -32,14 +46,14 @@ class NewEmployeeSchema(BaseModel):
     city: str
     state_province: str
     country: str
-    zip_code: str
-    time_zone: str
+    zip_code: str | None
+    time_zone: str | None
     personal_id: str
     email: EmailStr
     phone_number: str
-    company: str
+    company: str | None
     role: str
-    avatar_url: HttpUrl = DEFAULT_AVATAR_URL
+    avatar_url: HttpUrl | None
 
     class Config:
         extra = "forbid"
@@ -60,7 +74,7 @@ class PatchEmployeeSchema(BaseModel):
     is_manager: bool | None
     company: str | None
     role: str | None
-    avatar_url: HttpUrl = DEFAULT_AVATAR_URL
+    avatar_url: HttpUrl | None
 
     class Config:
         extra = "forbid"
