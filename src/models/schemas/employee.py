@@ -56,6 +56,9 @@ class NewEmployeeSchema(BaseModel):
     avatar_url: HttpUrl | None
 
     class Config:
+        """This config validates the request, if it has extra fields raises a validation error
+        https://pydantic-docs.helpmanual.io/usage/model_config/#options
+        """
         extra = "forbid"
 
 
@@ -77,4 +80,7 @@ class PatchEmployeeSchema(BaseModel):
     avatar_url: HttpUrl | None
 
     class Config:
+        """This config validates the request, if it has extra fields raises a validation error
+        https://pydantic-docs.helpmanual.io/usage/model_config/#options
+        """
         extra = "forbid"

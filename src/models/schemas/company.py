@@ -37,6 +37,9 @@ class NewCompanySchema(BaseModel):
     tax_id: str
 
     class Config:
+        """This config validates the request, if it has extra fields raises a validation error
+        https://pydantic-docs.helpmanual.io/usage/model_config/#options
+        """
         extra = "forbid"
 
 
@@ -56,4 +59,7 @@ class PatchCompanySchema(BaseModel):
     tax_id: str | None
 
     class Config:
+        """This config validates the request, if it has extra fields raises a validation error
+        https://pydantic-docs.helpmanual.io/usage/model_config/#options
+        """
         extra = "forbid"
