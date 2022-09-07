@@ -11,45 +11,45 @@ logger = logging.getLogger(__name__)
 
 
 class CompanyRepository:
-    @classmethod
-    async def get_all(self, db: Session) -> List[Company]:
+    @staticmethod
+    async def get_all(db: Session) -> List[Company]:
         """Gets all company's records from the DB"""
         try:
             return db.query(Company).all()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
-    @classmethod
-    async def get_by_id(self, id: str, db: Session) -> Company:
+    @staticmethod
+    async def get_by_id(id: str, db: Session) -> Company:
         """Gets a single company's records from the DB by id"""
         try:
             company = db.query(Company).filter(Company.id == id).first()
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
 
         if not company:
             logger.error(f"The company_id: {id} does not exist")
             DatabaseExceptions.throw_not_found_error("Company")
         return company
 
-    @classmethod
-    async def create(self, company: Company, db: Session) -> None:
+    @staticmethod
+    async def create(company: Company, db: Session) -> None:
         """Creates a company record on the DB"""
         try:
             db.add(company)
             db.commit()
             db.refresh(company)
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
 
-    @classmethod
-    async def delete(self, id: str, db: Session) -> None:
+    @staticmethod
+    async def delete(id: str, db: Session) -> None:
         """Deletes a company record from DB"""
         company = await CompanyRepository.get_by_id(id, db)
         try:
@@ -59,15 +59,15 @@ class CompanyRepository:
             logger.error(e, exc_info=True)
             DatabaseExceptions.throw_internal_server_error()
 
-    @classmethod
-    async def patch(self, company: Company, db: Session):
+    @staticmethod
+    async def patch(company: Company, db: Session):
         """Updates a company record in DB"""
         try:
             db.add(company)
             db.commit()
-        except IntegrityError as e:
-            logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_db_integrity_error(e)
+        except IntegrityError as integrity_error:
+            logger.error(integrity_error, exc_info=True)
+            DatabaseExceptions.throw_db_integrity_error(integrity_error)
         except Exception as e:
             logger.error(e, exc_info=True)
-            DatabaseExceptions.throw_internal_server_error()
+            DatabaseExceptions.throw_internal_server_error(e)
