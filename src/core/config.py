@@ -20,7 +20,20 @@ class ApiSettings(BaseSettings):
 
 
 class DbSettings(BaseSettings):
-    postgres_host: str = "db"
+    postgres_host: str
+    postgres_port: int
+    postgres_user: str
+    postgres_password: str
+    postgres_name: str
+    pgadmin_default_email: str
+    pgadmin_default_password: str
+
+    class Config:
+        env_file = ".env.database"
+
+
+class DbMigrationsSettings(BaseSettings):
+    postgres_host: str = "localhost"
     postgres_port: int = "5432"
     postgres_user: str = "fastapi"
     postgres_password: str = "fastapi"
@@ -29,15 +42,22 @@ class DbSettings(BaseSettings):
     pgadmin_default_password: str = "fastapi"
 
     class Config:
-        env_file = ".env.database"
+        env_file = "../.env.database"
 
 
 class Settings:
 
     @lru_cache
-    def get_api_settings() -> None:
+    def get_api_settings() -> ApiSettings:
         return ApiSettings()
 
     @lru_cache
-    def get_db_settings() -> None:
-        return DbSettings()
+    def get_db_settings() -> DbSettings:
+        try:
+            return DbSettings()
+        except Exception:
+            return DbMigrationsSettings()
+
+    @lru_cache
+    def get_db_alembic_settings() -> DbMigrationsSettings:
+        return DbMigrationsSettings()

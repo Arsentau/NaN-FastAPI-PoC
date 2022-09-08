@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/mock-company/{n}",
+    "/mock-company/{quantity}",
     status_code=status.HTTP_201_CREATED,
     name="Create and get n mock company",
     response_model=List[CompanySchema]

@@ -3,10 +3,12 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from core.config import DbSettings, Settings
+from core.config import DbMigrationsSettings, Settings
 from models.models import Base
 
-DB_CREDENTIALS: DbSettings = Settings.get_db_settings()
+DB_CREDENTIALS: DbMigrationsSettings = Settings.get_db_alembic_settings()
+if DB_CREDENTIALS.postgres_host == "db-fastapi":
+    DB_CREDENTIALS.postgres_host = "localhost"
 
 
 def get_url():
