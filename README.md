@@ -1,5 +1,11 @@
 # CRUD FastAPI + Docker + Postgres + Alembic - PoC
 
+This PoC was made using the following project as base:
+
+- [FastApiBase](https://github.com/nanlabs/python-reference/tree/main/examples/fastapi-base)
+
+---
+
 ## Prerequisites
 
 - Python 3.10
@@ -49,6 +55,12 @@ PGADMIN_DEFAULT_PASSWORD=fastapi
 
 ```bash
 docker-compose up --build
+```
+
+In newer versions of docker run the previous command without dash as is shown bellow:
+
+```bash
+docker compose up --build
 ```
 
 - To see docs ands schemas you can access:
@@ -126,7 +138,6 @@ alembic revision --autogenerate -m "<message>"
 alembic upgrade head
 ```
 
-
 - To apply one specific revision execute this command
 
 ```bash
@@ -139,14 +150,14 @@ alembic upgrade <revision_code>
 
 In order to improve the testing experience 2 specific endpoints have been added to populate DB with mock data using faker library.
 
-### Generate fake companies
+### Generate fake companies in DB
 
 Simply go to the endpoint : `http://localhost:8000/api/v0/companies/mock-company/{quantity}` by [Docs page](http://localhost:8000/docs#) or with Postman (in this case you must add the header `accept: application/json`)
 
 - In this case `quantity` is an integer greater than 0 that specifies how many fake companies should be created.
 - The **response** is the information of all new companies created as a list of companies.
 
-### Generate fake companies
+### Generate fake employees in DB
 
 Simply go to the endpoint : `http://localhost:8000/api/v0/employees/mock-employee/{quantity}` by [Docs page](http://localhost:8000/docs#) or with Postman (in this case you must add the header `accept: application/json`)
 
