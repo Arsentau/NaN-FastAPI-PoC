@@ -3,10 +3,10 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from core.config import DbSettings, Settings
+from core.config import DbBaseSettings, Settings
 from models.models import Base
 
-DB_CREDENTIALS: DbSettings = Settings.get_db_settings()
+DB_CREDENTIALS: DbBaseSettings = Settings.get_db_settings()
 
 
 def get_url():
