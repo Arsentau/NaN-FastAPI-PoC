@@ -57,7 +57,7 @@ PGADMIN_DEFAULT_PASSWORD=fastapi
 docker-compose up --build
 ```
 
-In newer versions of docker run the previous command without dash as is shown bellow:
+In newer versions of docker run the previous command without dash as is shown below:
 
 ```bash
 docker compose up --build
@@ -111,15 +111,6 @@ To install pre-commit in the .git hooks folder you only need to run the followin
 pre-commit install
 ```
 
-## Apply last committed migration
-
-- To run the last migration run the following command:
-
-```bash
-alembic upgrade head
-
-```
-
 ## Create migration
 
 ```bash
@@ -150,17 +141,15 @@ alembic upgrade <revision_code>
 
 In order to improve the testing experience 2 specific endpoints have been added to populate DB with mock data using faker library.
 
-### Generate fake companies in DB
+### Generate fake data in DB
 
-Simply go to the endpoint : `http://localhost:8000/api/v0/companies/mock-company/{quantity}` by [Docs page](http://localhost:8000/docs#) or with Postman (in this case you must add the header `accept: application/json`)
+In order to improve the testing experience, two specific endpoints have been added to populate DB with mock data using the Faker library:
 
-- In this case `quantity` is an integer greater than 0 that specifies how many fake companies should be created.
-- The **response** is the information of all new companies created as a list of companies.
+- Generate fake companies in DB: `http://localhost:8000/api/v0/companies/mock-company/{quantity}`
+- Generate fake employees in DB: `http://localhost:8000/api/v0/employees/mock-employee/{quantity}`
 
-### Generate fake employees in DB
+You can access these endpoints via the [Docs page](http://localhost:8000/docs#) or with Postman (in this case you must add the header `Accept: application/json`)
 
-Simply go to the endpoint : `http://localhost:8000/api/v0/employees/mock-employee/{quantity}` by [Docs page](http://localhost:8000/docs#) or with Postman (in this case you must add the header `accept: application/json`)
-
-- In this case `quantity` is an integer greater than 0 that specifies how many fake employees should be created.
-- The **response** is the information of all new companies created as a list of companies.
-- This endpoint has an **optional query parameter** `company_id` if it's specified first checks if the company exists in DB, if so, it creates the specified quantity of new mock employees with that specific company id
+- `quantity` is an integer greater than 0 that specifies how many fake companies/employees should be created.
+- The **response** is a list of all new companies/employees created with all their information.
+- The `mock-employee` endpoint has an **optional query parameter** `company_id`. If it is sent, first checks if the company exists in DB, if so, it creates the specified quantity of new mock employees with that specific company id.
