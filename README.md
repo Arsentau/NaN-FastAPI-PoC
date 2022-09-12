@@ -46,7 +46,6 @@ PGADMIN_DEFAULT_PASSWORD=fastapi
 ```
 
 **IMPORTANT** The value of `POSTGRES_HOST` should be the name of the db container.
-**These values can be directly used.**
 
 ## How to run locally
 
